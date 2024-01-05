@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="BLUE">#3f51b5</color>
+    <color name="GREY">#424242</color>
+    <color name="WHITE">#ffffff</color>
+    <color name="GREEN">#009688</color>
+    <color name="BLACK">#000000</color>
+
+
+    <color name="book_loading_background">#ffffff</color>
+    <color name="book_loading_book">#4481eb</color>
+    <color name="book_loading_page">#ffffff</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#2278d4</color>
+    <color name="dot_dark_screen2">#14a895</color>
+    <color name="dot_dark_screen3">#d1395c</color>
+    <color name="dot_dark_screen4">#ffd54f</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#93c6fd</color>
+    <color name="dot_light_screen2">#8cf9eb</color>
+    <color name="dot_light_screen3">#f98da5</color>
+    <color name="dot_light_screen4">#ffecb3</color>
+
+
+    <color name="newblue">#4481eb</color>
+    <color name="newgreen">#009688</color>
+    <color name="newred">#ef5350</color>
+    <color name="newyellow">#ffc107</color>
+    <color name="newcol">#c5c5c3</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
+</resources>
+
+<!--
+<resources>
+    <color name="colorPrimary">#00838f</color>
+    <color name="colorPrimaryLight">#4fb3bf</color>
+    <color name="colorPrimaryDark">#005662</color>
+    <color name="colorPrimaryText">#ffffff</color>
+    <color name="colorAccent">#FF4081</color>
+</resources>
+
+<resources>
+    <color name="colorPrimary">#1A237E</color> 1a237e
+    <color name="colorPrimaryLight">#534bae</color>
+    <color name="colorPrimaryDark">#1A237E</color>  000051
+    <color name="colorPrimaryText">#ffffff</color>
+    <color name="colorAccent">#FF4081</color>
+</resources>
+-->

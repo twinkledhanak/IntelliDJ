@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/newblue</item>
+        <item name="colorPrimaryDark">@color/newblue</item>
+        <item name="colorAccent">@color/newcol</item>
+        <item name="android:textColorPrimary">@color/BLACK</item>
+        <item name="android:textColorPrimaryInverse">@color/BLACK</item>
+        <item name="android:textColorSecondary">@color/BLACK</item>
+        <item name="android:textColorSecondaryInverse">@color/BLACK</item>
+
+
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme1" parent="Theme.Design.Light.NoActionBar" >
+        <item name="colorPrimary">@color/BLUE</item>
+        <item name="colorPrimaryDark">@color/BLUE</item>
+        <item name="colorAccent">@color/WHITE</item>
+        <item name="android:textColorPrimary">@color/WHITE</item>
+    </style>
+
+    <style name="answerstyle">
+        <item name="android:colorPrimaryDark">@color/newgreen</item>
+    </style>
+
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@drawable/bg_login</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorControlNormal">@color/WHITE</item>
+        <item name="colorControlActivated">@color/WHITE</item>
+        <item name="colorControlHighlight">@color/WHITE</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="FirebaseUI.Text.TextInputLayout" parent="@style/FirebaseUI.EditText" />
+
+    <style name="FirebaseUI.Text.HintText" parent="@style/FirebaseUI.EditText" />
+
+</resources>
+

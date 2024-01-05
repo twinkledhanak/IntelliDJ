@@ -1,0 +1,39 @@
+<!--
+<resources>
+    <string name="app_name">IntelliDJ</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_intelli_dj">IntelliDj</string>
+</resources>
+-->
+
+
+<resources>
+    <string name="app_name">IntelliDJ</string>
+
+
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
+    <string name="nav_profile">My Profile</string>
+    <string name="next">NEXT</string>
+    <string name="start">GOT IT</string>
+
+
+    <!-- extra
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    -->
+
+    <!-- navigation drawer item labels  -->
+
+
+</resources>

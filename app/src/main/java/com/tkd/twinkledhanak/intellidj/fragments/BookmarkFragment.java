@@ -1,0 +1,465 @@
+package com.tkd.twinkledhanak.intellidj.fragments;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.tkd.twinkledhanak.intellidj.R;
+import com.tkd.twinkledhanak.intellidj.activities.QAActivity;
+import com.tkd.twinkledhanak.intellidj.db.LocalDatabaseHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+
+public class BookmarkFragment extends Fragment {
+
+    private RecyclerView rv; // ADDING RECYCLER VIEW ELEMENTS
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    ArrayList<String> u, co, cl , ts , ct , utype;
+    ArrayList<String> vuname , vucloudid , vutype  , vusapid;
+    Intent in , intn;
+    private boolean isConnected = false;
+    String permisssion = "" , date , year = "" , sapid = "";
+    private LocalDatabaseHelper mDBHelper;
+
+    public BookmarkFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+        if (getArguments() != null) {
+
+            u = new ArrayList<>(getArguments().getStringArrayList("user"));
+            co = new ArrayList<>(getArguments().getStringArrayList("content"));
+            cl = new ArrayList<>(getArguments().getStringArrayList("cloudid"));
+            ts = new ArrayList<>(getArguments().getStringArrayList("timestamp"));
+            ct = new ArrayList<>(getArguments().getStringArrayList("category"));
+            utype = new ArrayList<>(getArguments().getStringArrayList("usertype"));
+
+            vuname = new ArrayList<String>();
+            vucloudid = new ArrayList<String>();
+            vutype = new ArrayList<String>();
+
+            try
+            {
+                InitializeUsers();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            // WE RETRIEVE USER TYPE FOR PERMISSIONS
+           GetUserDetails getUserDetails = new GetUserDetails();
+
+            try {
+                String sy = getUserDetails.execute().get();
+                String arr[] = sy.split("#");
+                permisssion = arr[1];
+                year = arr[2];
+                sapid = arr[5];
+
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            }
+
+
+            mDBHelper = new LocalDatabaseHelper(getActivity());
+
+
+        } else {
+        }
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+
+        vuname = new ArrayList<String>();
+        vucloudid = new ArrayList<String>();
+        vutype = new ArrayList<String>();
+        vusapid = new ArrayList<String>();
+        mDBHelper = new LocalDatabaseHelper(getActivity());
+
+        View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
+
+        rv = (RecyclerView) view.findViewById(R.id.bookmark_recycler_view);
+        mLayoutManager = new LinearLayoutManager(getContext());// use a linear layout manager
+        rv.setLayoutManager(mLayoutManager);
+        mAdapter = new BookmarkAdapter(u,co,cl,ts,ct,utype);
+
+        rv.setAdapter(mAdapter);
+
+
+        return view;
+
+    }
+
+    public void InitializeUsers()
+    {
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("User");
+
+        ref2.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if(!dataSnapshot.exists())
+                        {
+                            // no user
+                        }
+                        else
+                        {
+                            // user exists
+                            for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
+                            {
+
+                                vucloudid.add(dataSnapshot1.getKey());  // blind - cloud- id of user
+                                vuname.add(dataSnapshot1.child("name").getValue().toString()); // name
+
+                                vutype.add(dataSnapshot1.child("type").getValue().toString()); // type of user
+                              //  vusapid.add(dataSnapshot1.child("sapid").getValue().toString()); // type of user
+                            }
+                            // we are not inserting this value anywhere...its just innocent storing of values in vectors
+
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
+
+
+
+
+    }
+
+
+    public static BookmarkFragment newInstance(ArrayList<String> v1, ArrayList<String> v2, ArrayList<String> v3,
+                                               ArrayList<String> v4, ArrayList<String> v5 , ArrayList<String> v6) {
+        BookmarkFragment bf = new BookmarkFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList("user", v1);
+        args.putStringArrayList("content",v2);
+        args.putStringArrayList("cloudid",v3);
+        args.putStringArrayList("timestamp",v4);
+        args.putStringArrayList("category",v5);
+        args.putStringArrayList("usertype",v6);
+        bf.setArguments(args);
+        return bf;
+    }
+
+
+
+
+    private int isNetworkAvailable(Context context) {
+        int flag = 0;
+
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null) {
+
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        if (!isConnected) {
+
+                            //internetCheck.setIcon(R.drawable.ic_action_circle_green);
+                            // do nothing
+                            flag = 1;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        if (flag == 0) {
+
+            // not connected
+            // display a snack
+            //internetCheck.setIcon(R.drawable.ic_action_circle_red);
+
+
+
+        }
+        return flag;
+
+    }
+
+    class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHolder>
+    {
+
+        ArrayList<String> listName ;
+        ArrayList<String> listContent;
+        ArrayList<String > listQids;
+        ArrayList<String> listTimestamp;
+        ArrayList<String > listCategory;
+        ArrayList<String > listUserType;
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener// class inside class---subclass
+                                    {
+                                        ImageView itemImage;
+                                        TextView itemTitle;
+                                        TextView itemName;
+                                        TextView itemTime;
+                                        TextView itemCategory;
+                                        private Context context;
+
+                                        public ViewHolder(View view) // constrcutor of inner class
+                                        {
+                                            super(view);
+                                            itemImage = (ImageView) view.findViewById(R.id.item_image);
+                                            itemTitle = (TextView) view.findViewById(R.id.item_title);
+                                            itemName = (TextView) view.findViewById(R.id.item_name);
+                                            itemTime = (TextView) view.findViewById(R.id.itemTime);
+                                            itemCategory = (TextView) view.findViewById(R.id.category);
+
+                                            context = view.getContext();
+                                            itemTitle.setOnClickListener(this); // instead set it on a different object
+
+
+                                        }
+
+                                        @Override
+                                        public void onClick(View v)
+                                        {
+
+                                            int position = getLayoutPosition(); // gets item position
+
+                                            Long tsLong = System.currentTimeMillis() / 1000;
+                                            tsLong = tsLong * 1000;
+                                            Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                                            cal.setTimeInMillis(tsLong);
+                                            date = DateFormat.format("dd-MM-yyyy", cal).toString();
+                                            String newdate[] = date.split("-"); // newdate[1] has the month number , newdate[2] has year
+                                            int currentMonth = Integer.parseInt(newdate[1]); // 01, 02 etc indicate octal, so , use 1 , 2 while comparing
+                                            int currentYear = Integer.parseInt(newdate[2].substring(2,newdate[2].length())); // 18 , 19 whatever is current
+
+
+                                            if(isNetworkAvailable(context) == 1) // internet connection
+                                            {
+                                                        // must go to QA activity and perform same functionality
+
+                                                if (permisssion.matches("") || permisssion.matches("none") || permisssion.matches("None"))
+                                                {
+                                                    Toast.makeText(context,"Please update your profile first!",Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                else if (permisssion.matches("Student") && year.matches("be") )   // some obsolete user
+                                                {
+                                                    int vy = Integer.parseInt(sapid.substring(5,7)); // 14, 15 etc
+                                                    int diff = currentYear - vy;
+
+                                                    if (diff == 4 && currentMonth >= 6) {
+                                                        // obsolete user
+                                                    } else
+                                                    {
+                                                        InitializeUsers();
+                                                        String data = listContent.get(position);
+                                                        // user who asked the question
+                                                        String user = listName.get(position);
+                                                        String uid = sharedPreferences.getString("currentuid", "");
+
+                                                        // cloud-id of the question
+                                                        String qid = listQids.get(position);
+                                                        String timestamp = listTimestamp.get(position);
+                                                        in = new Intent(context, QAActivity.class);
+                                                        in.putExtra("user", user); // sorted
+                                                        in.putExtra("refQ", qid);
+                                                        in.putExtra("Qcontent", data); // sorted
+                                                        in.putStringArrayListExtra("username", vuname);
+                                                        in.putStringArrayListExtra("usercloudid", vucloudid);
+                                                        in.putStringArrayListExtra("usertype", vutype);
+
+                                                        in.putExtra("currentuid", uid);
+
+                                                        try {
+                                                            context.startActivity(in);
+                                                        } catch (Exception ex
+                                                                ) {
+
+                                                        }
+                                                    }
+
+
+                                                }
+                                                    else {
+
+                                                    InitializeUsers();
+                                                    String data = listContent.get(position);
+                                                    // user who asked the question
+                                                    String user = listName.get(position);
+                                                    String uid = sharedPreferences.getString("currentuid", "");
+
+                                                    // cloud-id of the question
+                                                    String qid = listQids.get(position);
+                                                    String timestamp = listTimestamp.get(position);
+                                                    in = new Intent(context, QAActivity.class);
+                                                    in.putExtra("user", user); // sorted
+                                                    in.putExtra("refQ", qid);
+                                                    in.putExtra("Qcontent", data); // sorted
+                                                    in.putStringArrayListExtra("username", vuname);
+                                                    in.putStringArrayListExtra("usercloudid", vucloudid);
+                                                    in.putStringArrayListExtra("usertype", vutype);
+
+                                                    in.putExtra("currentuid", uid);
+
+                                                    try {
+                                                        context.startActivity(in);
+                                                    } catch (Exception ex
+                                                            ) {
+
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(context,"Cannot read Answers in offline mode!",Toast.LENGTH_SHORT).show();
+
+                                            }
+
+
+
+                                        }
+
+
+                                    }
+
+
+            public BookmarkAdapter(ArrayList<String> one ,ArrayList<String> two ,ArrayList<String> three,
+                                   ArrayList<String> four, ArrayList<String> five  , ArrayList<String> six)
+            {
+                listName = new ArrayList<>(one);
+                listContent = new ArrayList<>(two);
+                listQids = new ArrayList<>(three);
+                listTimestamp = new ArrayList<>(four);
+                listCategory = new ArrayList<>(five);
+                listUserType = new ArrayList<>(six);
+            }
+
+
+
+
+            @Override
+        public BookmarkAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_bookmark,parent, false);
+                ViewHolder viewHolder = new ViewHolder(v);
+
+
+                return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(BookmarkAdapter.ViewHolder holder, int position) {
+
+            holder.itemTitle.setText(listContent.get(position));
+
+            if( listUserType.get(position).matches("none") ||  listUserType.get(position).matches(""))
+            {
+
+                holder.itemName.setText(listName.get(position));
+            }
+            else
+            {
+
+                holder.itemName.setText(listName.get(position) + " , " + listUserType.get(position));
+            }
+            holder.itemTime.setText(listTimestamp.get(position));
+            holder.itemCategory.setText(listCategory.get(position));
+            // viewHolder.itemImage.setBackground();  -- IMAGE SETTING IS STILL LEFT
+        }
+
+        @Override
+        public int getItemCount() {
+            return listContent.size();
+        }
+    }
+
+    public class GetUserDetails extends AsyncTask<Void, Void, String> {
+        // selects details only of current user
+        // so retrives details of only the one using app
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+
+            mDBHelper = new LocalDatabaseHelper(getActivity());
+            SQLiteDatabase sqLiteDatabase = mDBHelper.getWritableDatabase();
+            final Cursor Cr = sqLiteDatabase.rawQuery("SELECT * FROM user",
+                    new String[]{});
+            String sx = new String();
+
+            if(Cr.moveToNext())
+            {
+                // data exists
+                do {
+                    // retreive the data
+                    sx =  (Cr.getString(Cr.getColumnIndexOrThrow("department"))) + "#"
+                            +(Cr.getString(Cr.getColumnIndexOrThrow("type"))) + "#"
+                            + (Cr.getString(Cr.getColumnIndexOrThrow("year"))) + "#"
+                            + (Cr.getString(Cr.getColumnIndexOrThrow("image"))) + "#"
+                            + (Cr.getString(Cr.getColumnIndexOrThrow("cloud_id"))) + "#"
+                            + (Cr.getString(Cr.getColumnIndexOrThrow("sapid")));
+
+
+
+                }
+                while (Cr.moveToNext());
+            }
+            Cr.close();
+            return sx;
+        }
+    }
+
+
+
+
+}
+
+

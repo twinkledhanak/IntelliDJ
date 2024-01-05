@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1041277390008",
+    "firebase_url": "https://intellidj.firebaseio.com",
+    "project_id": "intellidj",
+    "storage_bucket": "intellidj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041277390008:android:d4d9d9af86023768",
+        "android_client_info": {
+          "package_name": "com.tkd.twinkledhanak.intellidj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041277390008-bbboom7kbkbt6qlup32fp5olojbo7ooc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tkd.twinkledhanak.intellidj",
+            "certificate_hash": "9215bdb06af53c81d00f0a3de36edef0bda67929"
+          }
+        },
+        {
+          "client_id": "1041277390008-k6c0noj7nf2o1mgjqb82hkv1qlc4ije9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tkd.twinkledhanak.intellidj",
+            "certificate_hash": "da3686902745e9eddf44a583ee0cef65a4d58bef"
+          }
+        },
+        {
+          "client_id": "1041277390008-rd8n46e3oboj1n3mlve5a4490mli41j9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACezhwbSyW21WRv-fJYO1EjcEV2arQavQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041277390008-rd8n46e3oboj1n3mlve5a4490mli41j9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

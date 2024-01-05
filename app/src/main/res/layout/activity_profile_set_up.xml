@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:orientation="vertical"
+
+    tools:context="com.tkd.twinkledhanak.intellidj.activities.ProfileSetUp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal"
+                android:background="@color/newblue">
+                <ImageButton
+                    android:id="@+id/imageview_id_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginEnd="60dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:background="@color/newblue"
+                    android:src="@mipmap/ic_editprofpic"
+                    android:onClick="showfile"
+                    >
+
+                </ImageButton>
+
+
+            </LinearLayout>
+    </ScrollView>
+
+            <!--android:src="@drawable/person300px" -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                >
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Name *"
+                    android:freezesText="true"
+                    android:inputType="textCapWords"
+
+                    android:textSize="18sp"
+                    android:fontFamily="monospace"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:id="@+id/uname"
+
+                    android:background="@drawable/edit_border"
+                    android:clickable="false"
+                    android:focusable="false"
+
+
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+               >
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Email *"
+                    android:freezesText="true"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:id="@+id/uemail"
+                    android:clickable="false"
+
+                    android:background="@drawable/edit_border"
+                    android:fontFamily="monospace"
+                    android:textSize="18sp"/>
+            </android.support.design.widget.TextInputLayout>
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+                >
+
+
+<!-- sapid -->
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Sap-ID *"
+                    android:freezesText="true"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:id="@+id/text_sapid"
+                    android:fontFamily="monospace"
+
+                    android:background="@drawable/edit_border"
+                    android:textSize="18sp"/>
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+
+              <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Department *"
+                    android:freezesText="true"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_marginTop="10dp"
+
+                    android:fontFamily="monospace"
+                    android:textSize="13sp"/>
+                    />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_dept"
+                android:onClick="displaydept"
+                android:textSize="18sp"
+                android:fontFamily="monospace"
+                android:paddingTop="15dp"
+
+                android:background="@drawable/edit_border"
+                android:textColor="#000000"
+                />
+
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:text="You are a:"
+                 android:layout_marginTop="10dp"
+                 android:fontFamily="monospace"
+                 android:textSize="13sp"/>
+             <Space
+                 android:layout_width="20dp"
+                 android:layout_height="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_type"
+                android:onClick="displaytype"
+
+                android:background="@drawable/edit_border"
+                android:textSize="18sp"
+                android:fontFamily="monospace"
+                android:paddingTop="20dp"
+                android:textColor="#000000"
+                />
+           <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Year / Position *"
+                    android:freezesText="true"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/title_year"
+                    android:fontFamily="monospace"
+                    android:textSize="13sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_year"
+                android:onClick="displayyear"
+                android:textSize="18sp"
+
+                android:background="@drawable/edit_border"
+                android:fontFamily="monospace"
+                android:paddingTop="15dp"
+                android:textColor="#000000"
+                />
+
+
+            <Button
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                 android:text="S U B M I T"
+                 android:layout_marginTop="20dp"
+                 android:id="@+id/submitProfile"
+                 android:fontFamily="monospace"
+                 android:textColor="#ffffff"
+                 android:onClick="rollback"
+                android:background="@drawable/profile_question"
+
+                />
+
+
+         </LinearLayout>
+        </LinearLayout>
+
+
+     </ScrollView>
+ </LinearLayout>
